@@ -4,6 +4,8 @@ A simple token management tool.
 
 ## Usage
 
+Note that for all commands below you will need to replace `toker` with `go run main.go` unless you've compiled the code into a binary named `toker`. Before running, you may need to run `rm go.sum;go get -u ./..`
+
 ```
 A very basic cli tool for dealing with UUID tokens.
 
@@ -39,7 +41,7 @@ Use "toker [command] --help" for more information about a command.
 
 ### Compare a token with a hash
 
-`toker hash 0fcb1d28-ef49-486b-8645-df9cbc943a04 '$2a$10$mVRImM1rNCS0EVBDMNicyOSfFLLgOnv284evL.8NnM/M3Pm9ZwdlC'`
+`toker compare 0fcb1d28-ef49-486b-8645-df9cbc943a04 '$2a$10$mVRImM1rNCS0EVBDMNicyOSfFLLgOnv284evL.8NnM/M3Pm9ZwdlC'`
 
 ## Author
 
