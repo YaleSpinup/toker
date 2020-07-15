@@ -4,7 +4,7 @@ A simple token management tool.
 
 ## Usage
 
-Note that for all commands below you will need to replace `toker` with `go run main.go` unless you've compiled the code into a binary named `toker`. Before running, you may need to run `rm go.sum;go get -u ./..`
+Note that for all commands below you will need to replace `toker` with `go run main.go` unless you've compiled the code into a binary named `toker`. You can get pre-compiled binaries from https://github.com/YaleSpinup/toker/releases.
 
 ```
 A very basic cli tool for dealing with UUID tokens.
