@@ -22,7 +22,7 @@ changelog:
 brews:
   -
     name: toker
-    description: A simple token management tool
+    description: Simple token management tool
     homepage: https://github.com/YaleSpinup/toker
     tap:
       owner: yalespinup
