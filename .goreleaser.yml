@@ -8,9 +8,6 @@ builds:
       - linux
       - windows
       - darwin
-    goarch:
-      - amd64
-      - arm64
     dir: .
     main: ./cmd/toker
 release:
