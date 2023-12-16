@@ -8,8 +8,6 @@ builds:
       - linux
       - windows
       - darwin
-    goarch:
-      - amd64
     main: ./cmd/toker
 release:
   prerelease: auto
