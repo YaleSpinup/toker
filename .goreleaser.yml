@@ -29,7 +29,7 @@ brews:
     name: toker
     description: Simple token management tool
     homepage: https://github.com/YaleSpinup/toker
-    tap:
+    repository:
       owner: yalespinup
       name: homebrew-tools
     install: |
