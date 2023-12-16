@@ -2,6 +2,9 @@
 
 A simple token management tool.
 
+---
+[![goreleaser](https://github.com/YaleSpinup/toker/actions/workflows/releaser.yml/badge.svg)](https://github.com/YaleSpinup/toker/actions/workflows/releaser.yml)
+[![tests](https://github.com/YaleSpinup/toker/actions/workflows/tests.yaml/badge.svg)](https://github.com/YaleSpinup/toker/actions/workflows/tests.yaml)
 ## Usage
 
 Note that for all commands below you will need to replace `toker` with `go run main.go` unless you've compiled the code into a binary named `toker`. You can get pre-compiled binaries from https://github.com/YaleSpinup/toker/releases.
