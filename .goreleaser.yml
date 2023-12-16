@@ -8,7 +8,6 @@ builds:
       - linux
       - windows
       - darwin
-    dir: .
     main: ./cmd/toker
 release:
   prerelease: auto
