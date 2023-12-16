@@ -19,7 +19,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
-package cmd
+package cli
 
 import (
 	"fmt"
@@ -35,9 +35,6 @@ var newCmd = &cobra.Command{
 	Short: "Generate tokens",
 	Long:  `Generate a list of tokens and optionally their encrypted values`,
 	PreRunE: func(cmd *cobra.Command, args []string) error {
-		if cost < 4 || cost > 31 {
-			return fmt.Errorf("invalid cost %d, min: 4, max 31, default: %d", cost, bcrypt.DefaultCost)
-		}
 
 		return nil
 	},
@@ -65,16 +62,24 @@ var newCmd = &cobra.Command{
 	},
 }
 
-func init() {
-	rootCmd.AddCommand(newCmd)
-	newCmd.PersistentFlags().IntVarP(&cost, "cost", "o", bcrypt.DefaultCost, "the cost for the generated hash (min 4, max 31)")
-	newCmd.PersistentFlags().IntVarP(&count, "count", "c", 5, "the number of UUIDs to generate")
-	newCmd.PersistentFlags().BoolVarP(&enc, "encrypt", "e", false, "also show encrypted values")
+// validateCost validates that the provided cost value is within the given size range
+func validateCost(cost int) error {
+	if cost < 4 || cost > 31 {
+		return fmt.Errorf("invalid cost %d, min: 4, max 31, default: %d", cost, bcrypt.DefaultCost)
+	}
+
+	return nil
 }
 
+// generate generates a number of UUIDv4 values equal to count
 func generate(count int) ([]uuid.UUID, error) {
-	tokens := []uuid.UUID{}
-	for i := 0; i < 5; i++ {
+	var tokens []uuid.UUID
+
+	if count < 1 {
+		return nil, fmt.Errorf("invalid count. count must be greater than 1")
+	}
+
+	for i := 0; i < count; i++ {
 		t, err := uuid.NewRandom()
 		if err != nil {
 			return nil, err
@@ -82,5 +87,16 @@ func generate(count int) ([]uuid.UUID, error) {
 		tokens = append(tokens, t)
 	}
 
+	if tokens == nil {
+		tokens = []uuid.UUID{}
+	}
+
 	return tokens, nil
+}
+
+func init() {
+	rootCmd.AddCommand(newCmd)
+	newCmd.PersistentFlags().IntVarP(&cost, "cost", "o", bcrypt.DefaultCost, "the cost for the generated hash (min 4, max 31)")
+	newCmd.PersistentFlags().IntVarP(&count, "count", "c", 5, "the number of UUIDs to generate")
+	newCmd.PersistentFlags().BoolVarP(&enc, "encrypt", "e", false, "also show encrypted values")
 }

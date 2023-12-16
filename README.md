@@ -45,7 +45,9 @@ Use "toker [command] --help" for more information about a command.
 
 ## Author
 
-E Camden Fisher <camden.fisher@yale.edu>
+* E Camden Fisher <camden.fisher@yale.edu>
+* Brandon Tassone <brandon.tassone@yale.edu>
+
 
 ## License
 
