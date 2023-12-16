@@ -8,6 +8,11 @@ builds:
       - linux
       - windows
       - darwin
+    goarch:
+      - amd64
+      - arm64
+    dir: .
+    main: ./cmd/toker
 release:
   prerelease: auto
   name_template: "{{.ProjectName}}-v{{.Version}}"
@@ -24,7 +29,7 @@ brews:
     name: toker
     description: Simple token management tool
     homepage: https://github.com/YaleSpinup/toker
-    tap:
+    repository:
       owner: yalespinup
       name: homebrew-tools
     install: |

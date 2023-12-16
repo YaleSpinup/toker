@@ -19,43 +19,53 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
-package cmd
+package cli
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/spf13/cobra"
 	"golang.org/x/crypto/bcrypt"
 )
 
-// hashCmd represents the hash command
-var hashCmd = &cobra.Command{
-	Use:   "hash password",
-	Short: "Hash a password",
-	Long:  `Encrypts the password using bcrypt`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		if cost < 4 || cost > 31 {
-			return fmt.Errorf("invalid cost %d, min: 4, max 31, default: %d", cost, bcrypt.DefaultCost)
-		}
+var quiet bool
 
-		if len(args) != 1 {
-			return fmt.Errorf("expected one argument, got %d", len(args))
-		}
-
-		return nil
-	},
+// compareCmd represents the compare command
+var compareCmd = &cobra.Command{
+	Use:   "compare password hash",
+	Short: "Compare a password (UUID) with a bcrypt hash",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		e, err := bcrypt.GenerateFromPassword([]byte(args[0]), cost)
-		if err != nil {
+		if err := validateArgs(args); err != nil {
 			return err
 		}
 
-		fmt.Println(string(e))
+		pass := args[0]
+		hash := args[1]
+		if err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(pass)); err != nil {
+			if !quiet {
+				fmt.Printf("password %s does not match hash %s\n", pass, hash)
+			}
+			os.Exit(1)
+		}
+
+		if !quiet {
+			fmt.Println("password matches hash")
+		}
 		return nil
 	},
 }
 
+// validateArgs checks to see if the passed arguments meet the requirements
+func validateArgs(args []string) error {
+	if len(args) != 2 {
+		return fmt.Errorf("2 arguments required, %d given", len(args))
+	}
+
+	return nil
+}
+
 func init() {
-	rootCmd.AddCommand(hashCmd)
-	hashCmd.PersistentFlags().IntVarP(&cost, "cost", "o", bcrypt.DefaultCost, "the cost for the generated hash (min 4, max 31)")
+	rootCmd.AddCommand(compareCmd)
+	compareCmd.PersistentFlags().BoolVarP(&quiet, "quiet", "q", false, "make output quiet")
 }
