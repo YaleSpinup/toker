@@ -6,7 +6,7 @@ require (
 	github.com/google/uuid v1.5.0
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/spf13/cobra v1.8.0
-	github.com/spf13/viper v1.18.1
+	github.com/spf13/viper v1.18.2
 	golang.org/x/crypto v0.16.0
 )
 
